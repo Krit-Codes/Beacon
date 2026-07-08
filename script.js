@@ -321,7 +321,7 @@ const items = document.querySelectorAll('.check-item');
     if (step.q && step.q.length){
       html += '<div class="modal-qbox"><div class="qlabel">Questions you could ask</div><ul>';
       step.q.forEach(q => { html += '<li>' + q + '</li>'; });
-      html += '</ul></div>';
+      html += '</ul><div class="qnote">AI assisted with these questions not all is human.</div></div>';
     }
     modalBody.innerHTML = html;
     modalBody.scrollTop = 0;
