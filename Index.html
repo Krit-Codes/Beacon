@@ -1,0 +1,1048 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Beacon — Trade what you know about online safety</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0E1526;
+    --dusk:#1A2740;
+    --dusk-2:#233252;
+    --paper:#ECE6D6;
+    --paper-2:#E1D9C4;
+    --beacon:#FFB648;
+    --beacon-dim:#C98A2E;
+    --teal:#4FD1C5;
+    --coral:#FF7A66;
+    --ink-soft:#A7B2C8;
+    --ink-faint:#5C6884;
+    --display: 'Space Grotesk', sans-serif;
+    --body: 'Source Serif 4', serif;
+    --mono: 'IBM Plex Mono', monospace;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--ink);
+    color:var(--paper);
+    font-family:var(--body);
+    line-height:1.6;
+    overflow-x:hidden;
+  }
+  a{color:inherit;}
+  .wrap{max-width:1180px; margin:0 auto; padding:0 32px;}
+  h1,h2,h3,.disp{font-family:var(--display); font-weight:600; letter-spacing:-0.01em;}
+  .eyebrow{
+    font-family:var(--mono); font-size:12px; letter-spacing:0.14em; text-transform:uppercase;
+    color:var(--beacon); display:flex; align-items:center; gap:10px; margin-bottom:18px;
+  }
+  .eyebrow::before{content:''; width:7px; height:7px; border-radius:50%; background:var(--beacon); box-shadow:0 0 0 4px rgba(255,182,72,0.18);}
+
+  /* ---------- NAV ---------- */
+  nav{
+    position:fixed; top:0; left:0; right:0; z-index:50;
+    display:flex; align-items:center; justify-content:space-between;
+    padding:20px 32px; backdrop-filter:blur(10px);
+    background:rgba(14,21,38,0.72); border-bottom:1px solid rgba(255,255,255,0.06);
+  }
+  .logo{display:flex; align-items:center; gap:10px; font-family:var(--display); font-weight:700; font-size:19px;}
+  .logo .dot{width:10px; height:10px; border-radius:50%; background:var(--beacon); box-shadow:0 0 12px var(--beacon);}
+  .navlinks{display:flex; gap:32px; font-family:var(--mono); font-size:13px; color:var(--ink-soft);}
+  .navlinks a{text-decoration:none; transition:color .2s;}
+  .navlinks a:hover{color:var(--beacon);}
+  .navcta{
+    font-family:var(--mono); font-size:13px; background:var(--beacon); color:var(--ink);
+    padding:9px 18px; border-radius:3px; text-decoration:none; font-weight:500;
+  }
+  @media(max-width:820px){ .navlinks{display:none;} }
+
+  /* ---------- HERO ---------- */
+  header.hero{
+    position:relative; padding:170px 0 100px; overflow:hidden;
+    background:
+      radial-gradient(ellipse 60% 50% at 15% 0%, rgba(79,209,197,0.10), transparent 60%),
+      radial-gradient(ellipse 60% 50% at 85% 10%, rgba(255,182,72,0.12), transparent 60%);
+  }
+  .hero-grid{display:grid; grid-template-columns:1fr 1px 1fr; gap:0; align-items:stretch; position:relative;}
+  .hero-seam{
+    background:linear-gradient(to bottom, transparent, rgba(255,182,72,0.5) 20%, rgba(255,182,72,0.5) 80%, transparent);
+    position:relative;
+  }
+  .hero-seam::before{
+    content:'⇄'; position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
+    width:44px; height:44px; border-radius:50%; background:var(--beacon); color:var(--ink);
+    display:flex; align-items:center; justify-content:center; font-size:18px; font-weight:700;
+    box-shadow:0 0 0 8px rgba(255,182,72,0.12), 0 0 30px rgba(255,182,72,0.4);
+  }
+  .hero-col{padding:10px 44px;}
+  .hero-col.left{text-align:right;}
+  .hero-tag{font-family:var(--mono); font-size:11.5px; letter-spacing:0.12em; text-transform:uppercase; color:var(--ink-soft); margin-bottom:10px;}
+  .hero-col.left .hero-tag{color:var(--teal);}
+  .hero-col.right .hero-tag{color:var(--beacon);}
+  .hero h1{font-size:23px; line-height:1.35; max-width:340px;}
+  .hero-col.left h1{margin-left:auto;}
+  .hero-title-center{
+    grid-column:1/-1; text-align:center; padding:8px 40px 46px; max-width:760px; margin:0 auto;
+  }
+  .hero-title-center h1{
+    font-size:clamp(34px, 5vw, 56px); line-height:1.08; max-width:none;
+  }
+  .hero-title-center h1 em{font-style:normal; color:var(--beacon);}
+  .hero-sub{
+    margin-top:22px; font-family:var(--body); font-size:18px; color:var(--ink-soft);
+    max-width:560px; margin-left:auto; margin-right:auto;
+  }
+  .hero-ctas{display:flex; gap:14px; justify-content:center; margin-top:34px; flex-wrap:wrap;}
+  .btn{
+    font-family:var(--mono); font-size:13.5px; padding:13px 24px; border-radius:3px; text-decoration:none;
+    font-weight:500; transition:transform .15s, box-shadow .15s; display:inline-block;
+  }
+  .btn-primary{background:var(--beacon); color:var(--ink);}
+  .btn-primary:hover{transform:translateY(-2px); box-shadow:0 8px 24px rgba(255,182,72,0.25);}
+  .btn-ghost{border:1px solid rgba(255,255,255,0.2); color:var(--paper);}
+  .btn-ghost:hover{border-color:var(--teal); color:var(--teal);}
+
+  @media(max-width:760px){
+    .hero-grid{grid-template-columns:1fr;}
+    .hero-seam{display:none;}
+    .hero-col.left{text-align:center;}
+    .hero-col.left h1{margin:0 auto;}
+    .hero-col{padding:6px 12px;}
+  }
+
+  /* ---------- STATS ---------- */
+  section.stats{padding:80px 0 60px; border-top:1px solid rgba(255,255,255,0.06);}
+  .stats-head{max-width:600px; margin-bottom:44px;}
+  .stats-head h2{font-size:30px;}
+  .stat-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.08);}
+  .stat-card{background:var(--ink); padding:32px 28px;}
+  .stat-num{font-family:var(--mono); font-size:40px; font-weight:500; color:var(--beacon); line-height:1;}
+  .stat-card:nth-child(2) .stat-num{color:var(--coral);}
+  .stat-card:nth-child(3) .stat-num{color:var(--teal);}
+  .stat-label{margin-top:14px; font-size:15px; color:var(--ink-soft); max-width:26ch;}
+  .stat-src{margin-top:14px; font-family:var(--mono); font-size:10.5px; color:var(--ink-faint); text-transform:uppercase; letter-spacing:.06em;}
+  @media(max-width:760px){ .stat-grid{grid-template-columns:1fr;} }
+
+  .crisis-note{
+    margin-top:28px; padding:16px 20px; border-left:2px solid var(--coral);
+    background:rgba(255,122,102,0.06); font-size:14px; color:var(--ink-soft); max-width:760px;
+  }
+  .crisis-note strong{color:var(--paper);}
+
+  /* ---------- EXCHANGE (paper section) ---------- */
+  section.exchange{background:var(--paper); color:var(--ink); padding:100px 0;}
+  section.exchange .eyebrow{color:var(--beacon-dim);}
+  section.exchange .eyebrow::before{background:var(--beacon-dim); box-shadow:0 0 0 4px rgba(201,138,46,0.18);}
+  .exchange-head{max-width:640px; margin-bottom:56px;}
+  .exchange-head h2{font-size:32px; color:var(--ink);}
+  .exchange-head p{margin-top:14px; color:#4a4536; font-size:17px;}
+
+  .lanes{display:grid; grid-template-columns:1fr 1fr; gap:0; border:1px solid rgba(14,21,38,0.12);}
+  .lane{padding:38px 36px;}
+  .lane.teens{border-right:1px solid rgba(14,21,38,0.12);}
+  .lane-head{display:flex; align-items:baseline; gap:10px; margin-bottom:22px;}
+  .lane-head .who{font-family:var(--mono); font-size:11px; letter-spacing:.1em; text-transform:uppercase; padding:4px 10px; border-radius:20px;}
+  .lane.teens .who{background:rgba(79,209,197,0.16); color:#1f8f83;}
+  .lane.parents .who{background:rgba(255,182,72,0.22); color:var(--beacon-dim);}
+  .lane-head h3{font-size:20px;}
+  .lane ul{list-style:none;}
+  .lane li{
+    padding:14px 0; border-top:1px solid rgba(14,21,38,0.1); font-size:15.5px; display:flex; gap:12px;
+  }
+  .lane li:first-of-type{border-top:none;}
+  .lane li::before{content:'—'; color:var(--beacon-dim); flex-shrink:0;}
+  @media(max-width:760px){ .lanes{grid-template-columns:1fr;} .lane.teens{border-right:none; border-bottom:1px solid rgba(14,21,38,0.12);} }
+
+  /* ---------- GUIDES ---------- */
+  section.guides{padding:100px 0; background:var(--ink);}
+  .guides-head{max-width:640px; margin-bottom:50px;}
+  .guides-head h2{font-size:32px;}
+  .guides-head p{margin-top:14px; color:var(--ink-soft); font-size:17px;}
+  .guide-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:18px;}
+  .guide-card{
+    background:var(--dusk); border:1px solid rgba(255,255,255,0.07); border-radius:6px; padding:26px 22px;
+    display:flex; flex-direction:column; gap:14px; transition:border-color .2s, transform .2s;
+  }
+  .guide-card:hover{border-color:var(--beacon); transform:translateY(-3px);}
+  .guide-index{font-family:var(--mono); font-size:12px; color:var(--beacon);}
+  .guide-card h4{font-size:17px; font-family:var(--display); font-weight:600;}
+  .guide-card p{font-size:13.5px; color:var(--ink-soft); flex-grow:1;}
+  .guide-link{font-family:var(--mono); font-size:12px; color:var(--teal); text-decoration:none;}
+  @media(max-width:980px){ .guide-grid{grid-template-columns:1fr 1fr;} }
+  @media(max-width:560px){ .guide-grid{grid-template-columns:1fr;} }
+
+  /* ---------- TRUST METER (signature) ---------- */
+  section.meter{padding:100px 0; background:var(--dusk); border-top:1px solid rgba(255,255,255,0.06); border-bottom:1px solid rgba(255,255,255,0.06);}
+  .meter-grid{display:grid; grid-template-columns:0.9fr 1.1fr; gap:60px; align-items:center;}
+  .meter-head h2{font-size:30px; margin-bottom:16px;}
+  .meter-head p{color:var(--ink-soft); font-size:16px; margin-bottom:14px;}
+  .meter-head .fine{font-family:var(--mono); font-size:12px; color:var(--ink-faint); border-top:1px solid rgba(255,255,255,0.08); padding-top:16px; margin-top:20px;}
+
+  .meter-panel{
+    background:var(--ink); border:1px solid rgba(255,255,255,0.08); border-radius:10px; padding:34px;
+    display:grid; grid-template-columns:auto 1fr; gap:30px; align-items:center;
+  }
+  .ring-wrap{position:relative; width:150px; height:150px;}
+  .ring-wrap svg{transform:rotate(-90deg);}
+  .ring-bg{fill:none; stroke:rgba(255,255,255,0.08); stroke-width:10;}
+  .ring-fg{fill:none; stroke:var(--beacon); stroke-width:10; stroke-linecap:round; transition:stroke-dashoffset .5s ease;}
+  .ring-num{
+    position:absolute; inset:0; display:flex; align-items:center; justify-content:center;
+    flex-direction:column; font-family:var(--mono);
+  }
+  .ring-num .n{font-size:30px; color:var(--paper);}
+  .ring-num .l{font-size:10px; color:var(--ink-faint); text-transform:uppercase; letter-spacing:.08em;}
+
+  .checklist{display:flex; flex-direction:column; gap:2px;}
+  .check-item{
+    display:flex; align-items:center; gap:12px; padding:11px 8px; border-radius:5px; cursor:pointer;
+    font-size:14px; color:var(--ink-soft); user-select:none; transition:background .15s;
+  }
+  .check-item:hover{background:rgba(255,255,255,0.04);}
+  .box{
+    width:18px; height:18px; border-radius:4px; border:1.5px solid var(--ink-faint); flex-shrink:0;
+    display:flex; align-items:center; justify-content:center; font-size:11px; color:var(--ink);
+    transition:all .15s;
+  }
+  .check-item.on{color:var(--paper);}
+  .check-item.on .box{background:var(--beacon); border-color:var(--beacon); color:var(--ink);}
+  @media(max-width:900px){ .meter-grid{grid-template-columns:1fr;} .meter-panel{grid-template-columns:1fr; justify-items:center; text-align:center;} }
+
+  /* ---------- CTA / FOOTER ---------- */
+  section.cta{padding:110px 0; text-align:center;}
+  .cta h2{font-size:clamp(28px,4vw,42px); max-width:680px; margin:0 auto;}
+  .cta p{margin-top:16px; color:var(--ink-soft); font-size:17px;}
+  .cta .hero-ctas{margin-top:30px;}
+
+  footer{border-top:1px solid rgba(255,255,255,0.07); padding:56px 0 60px;}
+  .foot-row{display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:20px;}
+  .foot-note{font-size:13px; color:var(--ink-faint); max-width:520px; line-height:1.7;}
+  .foot-note strong{color:var(--ink-soft);}
+
+  /* ---------- CYCLE (problem framing) ---------- */
+  section.cycle{padding:90px 0; background:var(--ink); border-top:1px solid rgba(255,255,255,0.06);}
+  .cycle-grid{display:grid; grid-template-columns:1fr 1fr; gap:60px; align-items:center;}
+  .cycle-copy h2{font-size:30px; margin-bottom:16px;}
+  .cycle-copy p{color:var(--ink-soft); font-size:16px; margin-bottom:14px;}
+  .cycle-loop{
+    display:flex; flex-direction:column; gap:0; background:var(--dusk); border:1px solid rgba(255,255,255,0.08);
+    border-radius:10px; overflow:hidden;
+  }
+  .cycle-step{
+    padding:20px 26px; display:flex; align-items:center; gap:16px; border-bottom:1px solid rgba(255,255,255,0.07);
+    font-size:14.5px; color:var(--paper);
+  }
+  .cycle-step:last-child{border-bottom:none;}
+  .cycle-step .num{
+    font-family:var(--mono); font-size:12px; color:var(--ink); background:var(--beacon);
+    width:26px; height:26px; border-radius:50%; display:flex; align-items:center; justify-content:center; flex-shrink:0;
+  }
+  .cycle-step.loop-back{color:var(--coral);}
+  .cycle-step.loop-back .num{background:var(--coral);}
+
+  /* ---------- 5 WHYS ---------- */
+  section.whys{padding:90px 0; background:var(--dusk); border-top:1px solid rgba(255,255,255,0.06); border-bottom:1px solid rgba(255,255,255,0.06);}
+  .whys-head{max-width:640px; margin-bottom:48px;}
+  .whys-head h2{font-size:30px;}
+  .whys-head p{margin-top:14px; color:var(--ink-soft); font-size:16px;}
+  .whys-chain{border-left:2px solid rgba(255,182,72,0.3); margin-left:14px;}
+  .why-row{position:relative; padding:0 0 34px 34px;}
+  .why-row:last-child{padding-bottom:0;}
+  .why-row::before{
+    content:attr(data-n); position:absolute; left:-15px; top:0; width:28px; height:28px; border-radius:50%;
+    background:var(--ink); border:2px solid var(--beacon); color:var(--beacon); font-family:var(--mono); font-size:12px;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .why-row h4{font-size:16.5px; margin-bottom:6px; font-family:var(--display); font-weight:600;}
+  .why-row p{font-size:14.5px; color:var(--ink-soft); max-width:640px;}
+  .why-row.final h4{color:var(--beacon);}
+
+  /* ---------- SOLUTIONS COMPARISON ---------- */
+  section.compare{padding:90px 0; background:var(--paper); color:var(--ink);}
+  section.compare .eyebrow{color:var(--beacon-dim);}
+  section.compare .eyebrow::before{background:var(--beacon-dim); box-shadow:0 0 0 4px rgba(201,138,46,0.18);}
+  .compare-head{max-width:680px; margin-bottom:44px;}
+  .compare-head h2{font-size:30px; color:var(--ink);}
+  .compare-cols{display:grid; grid-template-columns:1fr 1fr; gap:0; border:1px solid rgba(14,21,38,0.14);}
+  .compare-col{padding:30px 32px;}
+  .compare-col.tries{border-right:1px solid rgba(14,21,38,0.14);}
+  .compare-col h3{font-size:15px; font-family:var(--mono); text-transform:uppercase; letter-spacing:.08em; margin-bottom:18px;}
+  .compare-col.tries h3{color:var(--beacon-dim);}
+  .compare-col.results h3{color:var(--coral);}
+  .compare-col ul{list-style:none; display:flex; flex-direction:column; gap:10px;}
+  .compare-col li{font-size:14.5px; padding-left:18px; position:relative; color:#46412f;}
+  .compare-col li::before{content:'•'; position:absolute; left:0; color:var(--beacon-dim);}
+  .compare-col.results li::before{color:var(--coral);}
+  .compare-conclusion{
+    margin-top:28px; padding:20px 26px; background:var(--ink); color:var(--paper); border-radius:8px; font-size:15px;
+    max-width:820px;
+  }
+  @media(max-width:760px){ .compare-cols{grid-template-columns:1fr;} .compare-col.tries{border-right:none; border-bottom:1px solid rgba(14,21,38,0.14);} .cycle-grid{grid-template-columns:1fr;} }
+
+  /* ---------- ROADMAP / TEAM (from original deck) ---------- */
+  section.roadmap{padding:90px 0; background:var(--ink); border-top:1px solid rgba(255,255,255,0.06);}
+  .roadmap-head{max-width:680px; margin-bottom:12px;}
+  .roadmap-head h2{font-size:28px;}
+  .roadmap-flag{font-family:var(--mono); font-size:12px; color:var(--ink-faint); margin-bottom:40px; max-width:680px; line-height:1.6;}
+  .roadmap-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:18px; margin-bottom:50px;}
+  .roadmap-card{background:var(--dusk); border:1px solid rgba(255,255,255,0.07); border-radius:6px; padding:24px; font-size:14px; color:var(--ink-soft);}
+  .investor-row{display:flex; gap:14px; flex-wrap:wrap; align-items:center; margin-bottom:60px;}
+  .investor-chip{font-family:var(--mono); font-size:12px; color:var(--ink-faint); border:1px dashed rgba(255,255,255,0.15); padding:8px 16px; border-radius:20px;}
+  .team-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:18px;}
+  .team-card{text-align:center;}
+  .team-avatar{
+    width:64px; height:64px; border-radius:50%; margin:0 auto 12px; background:linear-gradient(135deg, var(--beacon), var(--teal));
+    display:flex; align-items:center; justify-content:center; font-family:var(--display); font-weight:700; color:var(--ink); font-size:20px;
+  }
+  .team-card h4{font-size:15px;}
+  .team-card p{font-size:12px; color:var(--ink-faint); font-family:var(--mono); text-transform:uppercase; letter-spacing:.06em;}
+  @media(max-width:760px){ .roadmap-grid{grid-template-columns:1fr;} .team-grid{grid-template-columns:1fr 1fr;} }
+
+  .credits{font-family:var(--mono); font-size:12px; color:var(--ink-faint); margin-top:18px;}
+
+  /* ---------- GUIDE MODAL ---------- */
+  .modal-overlay{
+    position:fixed; inset:0; background:rgba(6,10,20,0.72); backdrop-filter:blur(4px);
+    display:none; align-items:center; justify-content:center; z-index:200; padding:24px;
+  }
+  .modal-overlay.open{display:flex;}
+  .modal-box{
+    background:var(--dusk); border:1px solid rgba(255,255,255,0.1); border-radius:12px;
+    max-width:640px; width:100%; max-height:85vh; display:flex; flex-direction:column;
+    box-shadow:0 30px 80px rgba(0,0,0,0.5);
+  }
+  .modal-head{display:flex; justify-content:space-between; align-items:flex-start; padding:28px 30px 0;}
+  .modal-eyebrow{font-family:var(--mono); font-size:11px; letter-spacing:.12em; text-transform:uppercase; color:var(--beacon); margin-bottom:8px;}
+  .modal-head h3{font-size:22px; color:var(--paper); font-family:var(--display); font-weight:600; max-width:460px;}
+  .modal-close{
+    background:none; border:1px solid rgba(255,255,255,0.15); color:var(--ink-soft); width:32px; height:32px;
+    border-radius:50%; cursor:pointer; font-size:14px; flex-shrink:0; transition:all .15s;
+  }
+  .modal-close:hover{border-color:var(--coral); color:var(--coral);}
+  .modal-progress{height:3px; background:rgba(255,255,255,0.08); margin:20px 30px 0; border-radius:3px; overflow:hidden;}
+  .modal-progress-fill{height:100%; background:var(--beacon); width:20%; transition:width .3s ease;}
+  .modal-step-label{font-family:var(--mono); font-size:11px; color:var(--ink-faint); margin:10px 30px 0; text-transform:uppercase; letter-spacing:.08em;}
+  .modal-body{padding:16px 30px 26px; overflow-y:auto; flex-grow:1;}
+  .modal-body h4{font-family:var(--display); font-size:17px; color:var(--paper); margin-bottom:12px; font-weight:600;}
+  .modal-body p{font-size:14.5px; color:var(--ink-soft); margin-bottom:12px;}
+  .modal-qbox{
+    margin-top:16px; background:var(--ink); border:1px solid rgba(255,255,255,0.08); border-radius:8px; padding:18px 20px;
+  }
+  .modal-qbox .qlabel{font-family:var(--mono); font-size:10.5px; text-transform:uppercase; letter-spacing:.1em; color:var(--teal); margin-bottom:10px;}
+  .modal-qbox ul{list-style:none; display:flex; flex-direction:column; gap:9px;}
+  .modal-qbox li{font-size:14px; color:var(--paper); padding-left:18px; position:relative; line-height:1.5;}
+  .modal-qbox li::before{content:'"'; position:absolute; left:0; color:var(--teal); font-family:var(--display); font-weight:700;}
+  .modal-foot{
+    display:flex; align-items:center; justify-content:space-between; gap:12px; padding:18px 30px 26px;
+    border-top:1px solid rgba(255,255,255,0.07);
+  }
+  .modal-foot .btn{padding:10px 18px; font-size:12.5px;}
+  .modal-foot .btn:disabled{opacity:.35; cursor:not-allowed;}
+  .modal-dots{display:flex; gap:6px;}
+  .modal-dots span{width:6px; height:6px; border-radius:50%; background:rgba(255,255,255,0.18); transition:background .2s;}
+  .modal-dots span.active{background:var(--beacon);}
+  @media(max-width:600px){
+    .modal-head{padding:22px 20px 0;} .modal-progress{margin:16px 20px 0;} .modal-step-label{margin:8px 20px 0;}
+    .modal-body{padding:14px 20px 20px;} .modal-foot{padding:14px 20px 20px; flex-wrap:wrap;}
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo"><span class="dot"></span>Beacon</div>
+  <div class="navlinks">
+    <a href="#stats">Why it matters</a>
+    <a href="#whys">Root cause</a>
+    <a href="#exchange">The Exchange</a>
+    <a href="#guides">Parent Guides</a>
+    <a href="#meter">Progress</a>
+  </div>
+  <a href="#cta" class="navcta">Get started</a>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="hero-title-center">
+      <div class="eyebrow" style="justify-content:center;">A two-way guide to growing up online</div>
+      <h1>Nobody hands you a map for the internet. <em>So build one together.</em></h1>
+      <p class="hero-sub">Beacon is a trade, not a lecture. Teens show adults what they know about social media and gaming. Adults show teens what they know about spotting danger. Everyone leaves safer.</p>
+      <div class="hero-ctas">
+        <a href="#exchange" class="btn btn-primary">See how the trade works</a>
+        <a href="#guides" class="btn btn-ghost">Browse parent guides</a>
+      </div>
+    </div>
+
+    <div class="hero-grid">
+      <div class="hero-col left">
+        <div class="hero-tag">What teens bring</div>
+        <h1>Reading a privacy setting before it reads you. Knowing a bot account on sight. Muting a lobby the second it turns toxic.</h1>
+      </div>
+      <div class="hero-seam"></div>
+      <div class="hero-col right">
+        <div class="hero-tag">What adults bring</div>
+        <h1>Recognizing when "let's talk somewhere private" is a red flag. Knowing why age gaps online aren't accidents. Years of catching a scam before it lands.</h1>
+      </div>
+    </div>
+  </div>
+</header>
+
+<section class="stats" id="stats">
+  <div class="wrap">
+    <div class="stats-head">
+      <div class="eyebrow">Why this exists</div>
+      <h2>The internet a teenager opens today is not the neutral space it looks like.</h2>
+    </div>
+    <div class="stat-grid">
+      <div class="stat-card">
+        <div class="stat-num">500,000</div>
+        <div class="stat-label">Predators estimated to be active online on any given day — a figure widely cited by child-safety organizations and attributed to the FBI.</div>
+        <div class="stat-src">Widely cited estimate</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">1 in 3</div>
+        <div class="stat-label">Young people worldwide report having been the target of cyberbullying, across a 30-country UNICEF survey.</div>
+        <div class="stat-src">UNICEF U-Report, 2019</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">4×</div>
+        <div class="stat-label">Higher rate of suicidal thoughts and attempts reported by cyberbullied adolescents compared with peers who weren't — independent of in-person bullying.</div>
+        <div class="stat-src">CHOP / NIH-funded study, JAMA Network Open</div>
+      </div>
+    </div>
+    <div class="crisis-note">
+      <strong>If this topic is close to home:</strong> you don't have to carry it alone. The 988 Suicide &amp; Crisis Lifeline (call or text <strong>988</strong> in the US) is free, confidential, and available any time — for teens and adults.
+    </div>
+  </div>
+</section>
+
+<section class="cycle" id="cycle">
+  <div class="wrap">
+    <div class="cycle-grid">
+      <div class="cycle-copy">
+        <div class="eyebrow">Why it's not just about danger</div>
+        <h2>Distrust is a cycle, and it makes teens less safe — not more.</h2>
+        <p>When parents don't trust their kids with electronics, those kids reach adulthood without ever really learning to navigate the internet safely. That builds a loop: parents distrust, so kids hide, so parents distrust more.</p>
+        <p>It creates real distance — not just online, but day to day. Kids stop asking for help with the things that actually put them at risk, because asking feels riskier than staying quiet.</p>
+      </div>
+      <div class="cycle-loop">
+        <div class="cycle-step"><span class="num">1</span>A parent restricts or monitors, out of genuine worry</div>
+        <div class="cycle-step"><span class="num">2</span>A teen starts hiding activity instead of asking for help</div>
+        <div class="cycle-step"><span class="num">3</span>Real risks go undiscussed until something's already gone wrong</div>
+        <div class="cycle-step loop-back"><span class="num">↻</span>Parents trust less, tighten further — the loop repeats</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="whys" id="whys">
+  <div class="wrap">
+    <div class="whys-head">
+      <div class="eyebrow">Root cause</div>
+      <h2>We asked "why" five times to get past the symptoms</h2>
+      <p>A quick 5-Whys walkthrough of how a safety gap turns into a lasting trust gap.</p>
+    </div>
+    <div class="whys-chain">
+      <div class="why-row" data-n="1">
+        <h4>Why are teens exposed to online risks?</h4>
+        <p>Because they often face situations online without getting guidance from a trusted person beforehand.</p>
+      </div>
+      <div class="why-row" data-n="2">
+        <h4>Why don't they ask a trusted adult for help?</h4>
+        <p>Because many worry they'll be judged, punished, or have their devices taken away.</p>
+      </div>
+      <div class="why-row" data-n="3">
+        <h4>Why do parents respond with punishment or monitoring?</h4>
+        <p>Because they feel responsible for keeping their children safe, but don't fully understand today's online world.</p>
+      </div>
+      <div class="why-row" data-n="4">
+        <h4>Why don't parents understand today's online world?</h4>
+        <p>Because technology and online culture evolved faster than parents have been able to learn and adapt.</p>
+      </div>
+      <div class="why-row final" data-n="5">
+        <h4>Why has this created a long-lasting issue?</h4>
+        <p>Parents and teens end up with very different levels of digital understanding, and that gap becomes a gap in communication and trust. Parents lean on surveillance instead of teaching digital skills — and teens become less likely to seek support exactly when they need it most.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="compare" id="compare">
+  <div class="wrap">
+    <div class="compare-head">
+      <div class="eyebrow">What's out there today</div>
+      <h2>Most tools available to parents right now are built to control, not to teach</h2>
+    </div>
+    <div class="compare-cols">
+      <div class="compare-col tries">
+        <h3>What parents rely on</h3>
+        <ul>
+          <li>Screen time limits</li>
+          <li>Monitoring apps</li>
+          <li>Taking devices away</li>
+          <li>Blocking websites</li>
+          <li>Location tracking</li>
+          <li>Age restrictions</li>
+          <li>Passwords / 2FA</li>
+          <li>Content filters</li>
+        </ul>
+      </div>
+      <div class="compare-col results">
+        <h3>The results</h3>
+        <ul>
+          <li>Less trust</li>
+          <li>Secret accounts, secret devices</li>
+          <li>Kids learn to hide things</li>
+          <li>Issues aren't discussed until it's too late</li>
+          <li>Low engagement</li>
+          <li>Negative feelings due to restrictions</li>
+        </ul>
+      </div>
+    </div>
+    <div class="compare-conclusion">Current solutions focus on controlling teens instead of helping families build trust and digital skills — which is the gap Beacon is built to close.</div>
+  </div>
+</section>
+
+<section class="exchange" id="exchange">
+  <div class="wrap">
+    <div class="exchange-head">
+      <div class="eyebrow">The exchange</div>
+      <h2>Nobody in this relationship knows everything. That's the whole point.</h2>
+      <p>The goal: a way for parents to trust their kids to make independent choices online, while teens still understand the real risks — including when to talk to a parent or guardian if something feels unsafe, and how to steer clear of cyberbullies.</p>
+      <p>Instead of a one-way "internet safety talk," Beacon sets up an actual trade. Each side teaches what they've actually lived. Each side listens like a beginner.</p>
+    </div>
+    <div class="lanes">
+      <div class="lane teens">
+        <div class="lane-head"><span class="who">Teens teach</span><h3>Living online, responsibly</h3></div>
+        <ul>
+          <li>How to actually read a platform's privacy settings, not just accept the defaults</li>
+          <li>What a finsta, alt, or burner account is for — and when it's a red flag vs. normal</li>
+          <li>How to tell a bot, a scam DM, or a fake account from a real one</li>
+          <li>Gaming etiquette: muting, blocking, and reporting without losing the game</li>
+          <li>Which apps are actually private, and which just say they are</li>
+        </ul>
+      </div>
+      <div class="lane parents">
+        <div class="lane-head"><span class="who">Adults teach</span><h3>Reading danger before it lands</h3></div>
+        <ul>
+          <li>Why you don't talk in detail to people you've never met in person</li>
+          <li>Why a big age gap in a "friendship" online is a warning sign, not a coincidence</li>
+          <li>The grooming playbook: flattery, secrecy, gifts, moving to a private channel</li>
+          <li>Spotting a scam, a phishing link, or an identity-theft attempt</li>
+          <li>Why "just tell a trusted adult" actually works, and how to make that easy</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="guides" id="guides">
+  <div class="wrap">
+    <div class="guides-head">
+      <div class="eyebrow">For parents</div>
+      <h2>Guides and 1-on-1 sessions, built for a conversation — not a lecture</h2>
+      <p>Every guide is designed to open a discussion with your teen, not shut one down.</p>
+    </div>
+    <div class="guide-grid">
+      <div class="guide-card">
+        <div class="guide-index">Guide 01</div>
+        <h4>Start Here</h4>
+        <p>A 15-minute overview of the internet's real risks — grooming, scams, cyberbullying — without the scare tactics.</p>
+        <a class="guide-link" href="#" data-guide="start">Read the guide →</a>
+      </div>
+      <div class="guide-card">
+        <div class="guide-index">Guide 02</div>
+        <h4>The Red Flag Glossary</h4>
+        <p>Plain-language definitions of grooming tactics and scam patterns, so you recognize them the moment they show up.</p>
+        <a class="guide-link" href="#" data-guide="glossary">Read the guide →</a>
+      </div>
+      <div class="guide-card">
+        <div class="guide-index">Guide 03</div>
+        <h4>The 1-on-1, at home</h4>
+        <p>No booking, no outside facilitator — a script one parent and one teen sit down and work through together at the kitchen table, on your own schedule.</p>
+        <a class="guide-link" href="#" data-guide="oneonone">Read the guide →</a>
+      </div>
+      <div class="guide-card">
+        <div class="guide-index">Guide 04</div>
+        <h4>Conversation Starters</h4>
+        <p>Questions that open a dialogue about online life instead of triggering an interrogation.</p>
+        <a class="guide-link" href="#" data-guide="starters">Read the guide →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="modal-overlay" id="guideModal" aria-hidden="true">
+  <div class="modal-box" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal-head">
+      <div>
+        <div class="modal-eyebrow" id="modalEyebrow">Guide</div>
+        <h3 id="modalTitle">Title</h3>
+      </div>
+      <button class="modal-close" id="modalClose" aria-label="Close">✕</button>
+    </div>
+    <div class="modal-progress"><div class="modal-progress-fill" id="modalProgressFill"></div></div>
+    <div class="modal-step-label" id="modalStepLabel">Step 1 of 5</div>
+    <div class="modal-body" id="modalBody"></div>
+    <div class="modal-foot">
+      <button class="btn btn-ghost" id="modalPrev">← Back</button>
+      <div class="modal-dots" id="modalDots"></div>
+      <button class="btn btn-primary" id="modalNext">Next →</button>
+    </div>
+  </div>
+</div>
+
+<section class="meter" id="meter">
+  <div class="wrap">
+    <div class="meter-grid">
+      <div class="meter-head">
+        <div class="eyebrow">Progress, shared</div>
+        <h2>A trust meter both people can see</h2>
+        <p>This isn't spyware. It's a habit checklist your teen fills in themselves, together with you — a shared, honest record of which safety habits are actually sticking.</p>
+        <p class="fine">Try the demo: check off a few habits and watch the meter respond.</p>
+      </div>
+      <div class="meter-panel">
+        <div class="ring-wrap">
+          <svg width="150" height="150" viewBox="0 0 150 150">
+            <circle class="ring-bg" cx="75" cy="75" r="62"></circle>
+            <circle id="ringFg" class="ring-fg" cx="75" cy="75" r="62" stroke-dasharray="389.6" stroke-dashoffset="389.6"></circle>
+          </svg>
+          <div class="ring-num"><span class="n" id="ringPct">0%</span><span class="l">this week</span></div>
+        </div>
+        <div class="checklist" id="checklist">
+          <div class="check-item" data-w="20"><span class="box"></span>Reviewed privacy settings together</div>
+          <div class="check-item" data-w="20"><span class="box"></span>Talked through a red flag scenario</div>
+          <div class="check-item" data-w="20"><span class="box"></span>Reported or blocked something unsafe</div>
+          <div class="check-item" data-w="20"><span class="box"></span>Told a trusted adult about something odd</div>
+          <div class="check-item" data-w="20"><span class="box"></span>Kept a location or personal detail private</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cta" id="cta">
+  <div class="wrap">
+    <div class="eyebrow" style="justify-content:center;">Ready when you are</div>
+    <h2>Safety isn't something you tell a teenager. It's something you build with one.</h2>
+    <p>Start the exchange this week, at home — no booking, no account, no lecture required.</p>
+    <div class="hero-ctas">
+      <a href="#guides" class="btn btn-primary">Start the at-home 1-on-1</a>
+      <a href="#guides" class="btn btn-ghost">Explore the guides first</a>
+    </div>
+  </div>
+</section>
+
+<section class="roadmap" id="team">
+  <div class="wrap">
+    <div class="roadmap-head">
+      <div class="eyebrow">Who built this</div>
+      <h2>Meet the team</h2>
+    </div>
+    <div class="team-grid" style="margin-top:40px;">
+      <div class="team-card"><div class="team-avatar">V</div><h4>Virat</h4><p>Project Leader</p></div>
+      <div class="team-card"><div class="team-avatar">A</div><h4>Aden</h4><p>Website Designer &amp; Researcher</p></div>
+      <div class="team-card"><div class="team-avatar">N</div><h4>Nicolas</h4><p>Project Researcher</p></div>
+      <div class="team-card"><div class="team-avatar">R</div><h4>Roman</h4><p>Co-Researcher</p></div>
+      <div class="team-card"><div class="team-avatar">S</div><h4>Savannah</h4><p>Canva Designer</p></div>
+      <div class="team-card"><div class="team-avatar">S</div><h4>Sisu</h4><p>Focus Group Researcher</p></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap foot-row">
+    <div>
+      <div class="logo"><span class="dot"></span>Beacon</div>
+      <div class="credits">Hackathon, Term 3 — built by Virat, Aden, Nicolas, Roman, Savannah &amp; Sisu</div>
+    </div>
+    <div class="foot-note">
+      <strong>Note on sources:</strong> Cyberbullying figures are drawn from a 2019 UNICEF U-Report survey of 170,000+ young people across 30 countries, and a Children's Hospital of Philadelphia / NIH-funded study published in JAMA Network Open. The predator estimate is a widely circulated figure commonly attributed to the FBI; treat it as an order-of-magnitude warning rather than a precise count. This page is a design concept, not a live crisis service.
+    </div>
+  </div>
+  <div class="wrap">
+    <div class="credits" style="margin-top:26px; border-top:1px solid rgba(255,255,255,0.07); padding-top:20px;">AI helped build this website. Everything else was researched, written, and designed manually by the team.</div>
+  </div>
+</footer>
+
+<script>
+
+  const items = document.querySelectorAll('.check-item');
+  const ringFg = document.getElementById('ringFg');
+  const ringPct = document.getElementById('ringPct');
+  const CIRC = 389.6;
+  let total = 0;
+
+  function update(){
+    const offset = CIRC - (CIRC * total / 100);
+    ringFg.style.strokeDashoffset = offset;
+    ringPct.textContent = total + '%';
+  }
+
+  items.forEach(item => {
+    item.addEventListener('click', () => {
+      const w = parseInt(item.dataset.w, 10);
+      const on = item.classList.toggle('on');
+      const box = item.querySelector('.box');
+      box.textContent = on ? '✓' : '';
+      total += on ? w : -w;
+      total = Math.max(0, Math.min(100, total));
+      update();
+    });
+  });
+
+  /* ---------- GUIDE MODAL ---------- */
+  const GUIDES = {
+    start: {
+      eyebrow: 'Guide 01 · Start Here',
+      title: 'A 15-minute overview, step by step',
+      steps: [
+        {
+          h: 'Pick the right moment',
+          body: [
+            'Choose a calm, ordinary evening — not right after a phone gets confiscated or an argument. Sit side by side (couch, car, kitchen island) rather than across a table facing each other; it takes the "interrogation" feel out of it.',
+            'Open with the frame, not the warning: "I want to trade what we each know about staying safe online — you teach me some things, I teach you some things."'
+          ],
+          q: [
+            'Is now an okay time, or is there a better time this week?',
+            'Would you rather do this over food, in the car, or just here on the couch?'
+          ]
+        },
+        {
+          h: 'Name the four risks, together',
+          body: [
+            'Walk through them plainly, without alarm: seeing content that\u2019s upsetting or not age-appropriate; private info leaking (leading to scams, hacking, stolen identity); cyberbullying; and people online who aren\u2019t who they say they are.',
+            'You\u2019re not quizzing — you\u2019re naming the map before you walk it.'
+          ],
+          q: [
+            'Which of these four feels most real to you, based on what you\u2019ve actually seen?',
+            'Has anything like this happened to someone you know, even if not to you?'
+          ]
+        },
+        {
+          h: 'Let them go first',
+          body: [
+            'Ask your teen to show you one thing they already do to stay safe — a privacy setting, a block button, a way they screen messages. Let them be the expert for a few minutes.',
+            'This does two things: it builds their confidence, and it shows you what they actually know (which is often more than you expect).'
+          ],
+          q: [
+            'Can you show me one thing you already do to keep your account private?',
+            'What\u2019s something about [the app they use most] you wish adults understood better?'
+          ]
+        },
+        {
+          h: 'Then you go',
+          body: [
+            'Share one real risk you know about — briefly, specifically, without turning it into a lecture. A short story lands better than a rule.',
+            'Keep it to one example. The goal is a trade, not a monologue.'
+          ],
+          q: [
+            'Can I show you one thing I know about, that you might not have run into yet?',
+            'Want to hear about a scam I almost fell for, so you know what it looks like?'
+          ]
+        },
+        {
+          h: 'Close with the standing offer',
+          body: [
+            'End every session the same way: "You can always tell me. We\u2019ll figure it out together — losing the phone isn\u2019t the automatic response to bad news."',
+            'That one sentence is what makes the next conversation possible.'
+          ],
+          q: [
+            'What would make it easier for you to come to me if something felt wrong online?',
+            'Is there anything that\u2019s stopped you from telling me something before?'
+          ]
+        }
+      ]
+    },
+    glossary: {
+      eyebrow: 'Guide 02 · Red Flag Glossary',
+      title: 'Working through the glossary together',
+      steps: [
+        {
+          h: 'Read it out loud, together',
+          body: [
+            'Don\u2019t hand over a printout to read alone — go through the terms together, out loud. It turns a vocabulary list into a conversation.',
+            'Terms to cover: grooming, catfishing, phishing, doxxing, sextortion basics (at an age-appropriate level), and "moving to DMs."'
+          ],
+          q: [
+            'Which of these words have you already heard used?',
+            'Is there a term your friends use for this stuff that\u2019s different from mine?'
+          ]
+        },
+        {
+          h: 'Sort what\u2019s new from what\u2019s known',
+          body: [
+            'For each term, ask which ones are already familiar versus genuinely new. This tells you where the real gaps are, instead of assuming.'
+          ],
+          q: [
+            'Which of these did you already know? Which one is actually new to you?',
+            'Which one surprised you the most?'
+          ]
+        },
+        {
+          h: 'Turn each term into a real question',
+          body: [
+            'Instead of "don\u2019t talk to strangers," ask about the specific pattern: has a conversation ever moved quickly from a game chat to a private one? Has anyone ever asked to keep a chat secret from you?',
+            'Specific questions get more honest answers than general warnings.'
+          ],
+          q: [
+            'Has someone ever asked you to move a conversation to DMs or a different app quickly?',
+            'Has anyone online ever asked you to keep a conversation secret from me?',
+            'Has anyone ever asked you for a photo, your address, or your school name?'
+          ]
+        },
+        {
+          h: 'Agree on a signal',
+          body: [
+            'Set up a low-key code word or phrase your teen can text you if something feels off and they want you to check in or create an exit, without making a scene in front of friends.'
+          ],
+          q: [
+            'If you needed me to check on you without anyone else knowing, what word could you text me?',
+            'What would you want me to do if you sent that word — call, show up, or just text back?'
+          ]
+        },
+        {
+          h: 'Revisit it every couple of months',
+          body: [
+            'Apps and slang change fast. Put a loose reminder on the calendar to re-read the glossary together — five minutes, not a big event.'
+          ],
+          q: [
+            'Has anything changed since we last talked about this — new app, new group chat, new person?'
+          ]
+        }
+      ]
+    },
+    oneonone: {
+      eyebrow: 'Guide 03 · The 1-on-1, at Home',
+      title: 'Running the session, start to finish',
+      steps: [
+        {
+          h: 'Step 1 — Set the scene',
+          body: [
+            'Low-pressure environment: kitchen table, car, a walk. Phones can be nearby for reference, not for scrolling.',
+            'Say it plainly at the start: "Nothing you tell me tonight gets you in trouble. I want the truth more than I want a perfect answer."'
+          ],
+          q: [
+            'Are you okay talking about this right now, or would another time feel better?'
+          ]
+        },
+        {
+          h: 'Step 2 — They\u2019re the expert first',
+          body: [
+            'Ask them to show or explain something to you — a setting, an app feature, how they handle a pushy stranger in a game lobby. Let them teach.'
+          ],
+          q: [
+            'Can you show me how you\u2019d block or report someone on [app]?',
+            'What\u2019s one thing you do automatically now that you didn\u2019t used to think about?'
+          ]
+        },
+        {
+          h: 'Step 3 — You trade back',
+          body: [
+            'Share a real, specific risk or story — a scam pattern, a grooming tactic, an identity-theft close call. Keep it short and concrete.'
+          ],
+          q: [
+            'Want to hear about a red flag that\u2019s easy to miss?'
+          ]
+        },
+        {
+          h: 'Step 4 — Warm-up questions',
+          body: [
+            'Start low-stakes to build comfort before anything sensitive comes up.'
+          ],
+          q: [
+            'What\u2019s your favorite thing to do online right now?',
+            'Which of your friends is the most careful online, and what do they do?',
+            'What\u2019s something online that made you laugh this week?'
+          ]
+        },
+        {
+          h: 'Step 5 — Observation questions',
+          body: [
+            'Ask about what they\u2019ve seen happen to others first — it\u2019s easier to answer honestly about a friend than about yourself.'
+          ],
+          q: [
+            'Has a stranger ever messaged you first? What did you do?',
+            'Have you ever seen someone lie about their age online?',
+            'Has a friend of yours ever had something happen online that scared them?'
+          ]
+        },
+        {
+          h: 'Step 6 — Feelings & safety-net questions',
+          body: [
+            'These are the ones that matter most — ask gently, and let silence sit if they need a moment.'
+          ],
+          q: [
+            'Has anything online ever made you feel weird or unsafe, even something small?',
+            'Is there anything you\u2019ve seen or been part of that you didn\u2019t know how to bring up with me?',
+            'What would make it easier to tell me if something ever felt wrong?',
+            'What would you want me to NOT do, if you told me something scary happened?'
+          ]
+        },
+        {
+          h: 'Step 7 — Make the no-freakout promise real',
+          body: [
+            'Agree out loud on what happens if something is disclosed: you stay calm, you problem-solve together, the phone doesn\u2019t disappear as an automatic punishment.'
+          ],
+          q: [
+            'If something did happen, what would help you feel like it\u2019s safe to tell me right away next time?'
+          ]
+        },
+        {
+          h: 'Step 8 — Close on the trust meter',
+          body: [
+            'End by picking one or two habits from the trust meter to check off together this week. Keep the next check-in loose and regular — not a scheduled, formal "session."'
+          ],
+          q: [
+            'Which one habit do you want to try together this week?'
+          ]
+        }
+      ]
+    },
+    starters: {
+      eyebrow: 'Guide 04 · Conversation Starters',
+      title: 'A question bank, organized by comfort level',
+      steps: [
+        {
+          h: 'Icebreakers — no judgment, no stakes',
+          body: [
+            'Use these to open literally any conversation about their online life. The goal is just to get them talking.'
+          ],
+          q: [
+            'What app are you actually into right now?',
+            'What\u2019s the funniest thing you saw online today?',
+            'If you had to teach me one thing about [game/app], what would it be?'
+          ]
+        },
+        {
+          h: 'Curiosity questions — let them teach you',
+          body: [
+            'Position your teen as the expert. People are more open when they feel respected, not managed.'
+          ],
+          q: [
+            'What do you wish parents actually understood about being online right now?',
+            'What\u2019s something you do to stay safe that you think most adults don\u2019t know about?',
+            'Is there a rule I have that doesn\u2019t really make sense for how you actually use this stuff?'
+          ]
+        },
+        {
+          h: 'Gentle red-flag check-ins',
+          body: [
+            'Ask about patterns and other people first — it lowers the pressure and often surfaces real experiences naturally.'
+          ],
+          q: [
+            'Has anyone online ever asked you something that felt off?',
+            'Do people your age ever talk to strangers who seem a lot older? What happens?',
+            'Has anyone ever pushed you to keep a chat secret?'
+          ]
+        },
+        {
+          h: 'Feelings & safety-net questions',
+          body: [
+            'These build the bridge to actually telling the truth when something matters. Ask without a reaction ready to fire.'
+          ],
+          q: [
+            'Has anything online ever made you feel uneasy, even if it wasn\u2019t a big deal?',
+            'Is there anything happening online right now you\u2019ve been unsure how to bring up?',
+            'What would make it easier to come to me if something felt wrong?'
+          ]
+        },
+        {
+          h: 'Wrap-up affirmations',
+          body: [
+            'End on connection, not correction — this is what makes the next conversation easier than this one.'
+          ],
+          q: [
+            'Thanks for being honest with me tonight — is there anything else on your mind?',
+            'What\u2019s one thing we should check in on again in a few weeks?'
+          ]
+        }
+      ]
+    }
+  };
+
+  const modal = document.getElementById('guideModal');
+  const modalEyebrow = document.getElementById('modalEyebrow');
+  const modalTitle = document.getElementById('modalTitle');
+  const modalBody = document.getElementById('modalBody');
+  const modalStepLabel = document.getElementById('modalStepLabel');
+  const modalProgressFill = document.getElementById('modalProgressFill');
+  const modalDots = document.getElementById('modalDots');
+  const modalPrev = document.getElementById('modalPrev');
+  const modalNext = document.getElementById('modalNext');
+  const modalClose = document.getElementById('modalClose');
+
+  let currentGuide = null;
+  let currentStep = 0;
+
+  function renderStep(){
+    const guide = GUIDES[currentGuide];
+    const step = guide.steps[currentStep];
+    const total = guide.steps.length;
+
+    modalEyebrow.textContent = guide.eyebrow;
+    modalTitle.textContent = guide.title;
+    modalStepLabel.textContent = 'Step ' + (currentStep + 1) + ' of ' + total;
+    modalProgressFill.style.width = (((currentStep + 1) / total) * 100) + '%';
+
+    let html = '<h4>' + step.h + '</h4>';
+    step.body.forEach(p => { html += '<p>' + p + '</p>'; });
+    if (step.q && step.q.length){
+      html += '<div class="modal-qbox"><div class="qlabel">Questions you could ask</div><ul>';
+      step.q.forEach(q => { html += '<li>' + q + '</li>'; });
+      html += '</ul></div>';
+    }
+    modalBody.innerHTML = html;
+    modalBody.scrollTop = 0;
+
+    modalDots.innerHTML = '';
+    for (let i = 0; i < total; i++){
+      const dot = document.createElement('span');
+      if (i === currentStep) dot.classList.add('active');
+      modalDots.appendChild(dot);
+    }
+
+    modalPrev.disabled = currentStep === 0;
+    modalNext.textContent = currentStep === total - 1 ? 'Done' : 'Next →';
+  }
+
+  function openGuide(key){
+    currentGuide = key;
+    currentStep = 0;
+    modal.classList.add('open');
+    modal.setAttribute('aria-hidden', 'false');
+    renderStep();
+  }
+
+  function closeGuide(){
+    modal.classList.remove('open');
+    modal.setAttribute('aria-hidden', 'true');
+  }
+
+  document.querySelectorAll('[data-guide]').forEach(link => {
+    link.addEventListener('click', (e) => {
+      e.preventDefault();
+      openGuide(link.dataset.guide);
+    });
+  });
+
+  modalClose.addEventListener('click', closeGuide);
+  modal.addEventListener('click', (e) => { if (e.target === modal) closeGuide(); });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && modal.classList.contains('open')) closeGuide(); });
+
+  modalPrev.addEventListener('click', () => {
+    if (currentStep > 0){ currentStep--; renderStep(); }
+  });
+  modalNext.addEventListener('click', () => {
+    const total = GUIDES[currentGuide].steps.length;
+    if (currentStep < total - 1){ currentStep++; renderStep(); }
+    else { closeGuide(); }
+  });
+</script>
+
+</body>
+</html>
