@@ -97,3 +97,24 @@ if (trackerReset) {
     updateRing();
   });
 }
+
+
+/* ---------- SKIP TO TOOLKIT ---------- */
+const skipToolkitBtn = document.getElementById('skipToolkitBtn');
+let toolkitPage = null;
+slides.forEach(s => {
+  const heading = s.querySelector('h2, h1');
+  if (heading && heading.textContent.trim() === 'The Toolkit') {
+    toolkitPage = parseInt(s.dataset.slide, 10);
+  }
+});
+
+if (skipToolkitBtn && toolkitPage) {
+  skipToolkitBtn.addEventListener('click', () => goTo(toolkitPage));
+  const originalRender = render;
+  render = function () {
+    originalRender();
+    skipToolkitBtn.disabled = current === toolkitPage;
+  };
+  render();
+}
