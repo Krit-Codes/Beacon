@@ -1,236 +1,205 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Beacon</title>
-<link rel="icon" type="image/svg+xml" href="favicon.svg">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css">
-<script>
-  window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
-</script>
-<script defer src="/_vercel/insights/script.js"></script>
-</head>
-<body>
+:root{
+  --ink:#ECE6D6;
+  --dusk:#E4DCC7;
+  --paper:#241F16;
+  --beacon:#C98A2E;
+  --clay:#C97B5A;
+  --blush:#EAD7C4;
+  --cream:#F4EDE0;
+  --ink-soft:#5B5340;
+  --ink-faint:#8C8368;
+  --display:'Space Grotesk', sans-serif;
+  --body:'Source Serif 4', serif;
+  --mono:'IBM Plex Mono', monospace;
+}
+*{box-sizing:border-box; margin:0; padding:0;}
+html,body{height:100%;}
+body{
+  background:var(--ink);
+  color:var(--paper);
+  font-family:var(--body);
+  line-height:1.65;
+  display:flex;
+  flex-direction:column;
+  min-height:100vh;
+}
+h1,h2,h3,.disp{font-family:var(--display); font-weight:600; letter-spacing:-0.01em;}
+.eyebrow{
+  font-family:var(--mono); font-size:12px; letter-spacing:0.14em; text-transform:uppercase;
+  color:var(--beacon); display:flex; align-items:center; gap:10px; margin-bottom:18px;
+}
+.eyebrow::before{content:''; width:7px; height:7px; border-radius:50%; background:var(--beacon);}
 
-<header class="top">
-  <div class="logo"><span class="dot"></span>Beacon</div>
-  <div class="top-right">
-    <button class="skip-btn" id="skipToolkitBtn">Skip to Toolkit</button>
-    <div class="page-count" id="pageCount">Page 1 of 11</div>
-  </div>
-</header>
+header.top{
+  display:flex; align-items:center; justify-content:space-between;
+  padding:22px 32px; border-bottom:1px solid rgba(36,31,22,0.1);
+}
+.logo{display:flex; align-items:center; gap:10px; font-family:var(--display); font-weight:700; font-size:19px;}
+.logo .dot{width:10px; height:10px; border-radius:50%; background:var(--beacon);}
+.top-right{display:flex; align-items:center; gap:18px;}
+.page-count{font-family:var(--mono); font-size:12px; color:var(--ink-faint);}
+.skip-btn{
+  font-family:var(--mono); font-size:12px; padding:8px 16px; border-radius:20px;
+  border:1px solid var(--beacon); background:var(--beacon); color:var(--cream); cursor:pointer;
+  font-weight:600; transition:all .15s;
+}
+.skip-btn:hover:not(:disabled){opacity:.88;}
+.skip-btn:disabled{opacity:.35; cursor:default; background:none; color:var(--ink-soft); border-color:rgba(36,31,22,0.2);}
 
-<main>
+main{flex:1; display:flex; align-items:center; justify-content:center; padding:50px 32px;}
+.slide{display:none; max-width:720px; width:100%; animation:fade .35s ease;}
+.slide.active{display:block;}
+@keyframes fade{from{opacity:0; transform:translateY(6px);} to{opacity:1; transform:translateY(0);}}
 
-  <section class="slide active" data-slide="1">
-    <div class="title-slide">
-      <div class="eyebrow">Hackathon · Term 3</div>
-      <h1>Beacon</h1>
-      <p class="credit">By Virat, Roman, Aden, Nicolas, Sisu, and Savannah</p>
-    </div>
-  </section>
+.slide h1{font-size:clamp(30px,5vw,46px); line-height:1.15; margin-bottom:14px;}
+.slide h2{font-size:clamp(24px,4vw,32px); margin-bottom:22px;}
+.slide .credit{font-family:var(--mono); font-size:14px; color:var(--ink-soft);}
+.thank-you-list{margin-top:36px; padding-top:24px; border-top:1px solid rgba(36,31,22,0.12);}
+.thank-you-list p{font-family:var(--mono); font-size:13.5px; color:var(--ink-soft); margin-bottom:8px;}
+.thank-you-list p:last-child{margin-bottom:0;}
+.slide p{font-size:16.5px; color:var(--ink-soft); margin-bottom:14px;}
+.slide p:last-child{margin-bottom:0;}
 
-  <section class="slide" data-slide="2">
-    <div class="eyebrow">Our Challenge</div>
-    <h2>Our Challenge</h2>
-    <p>The FBI estimates around 500,000 predators are online every day. Using the internet without taking precautions can lead to exposure to harmful content. It can lead to revealing private information, which usually leads to scamming, getting hacked, and identity theft.</p>
-    <p>It can also lead to cyberbullying — around 4% of people who get cyberbullied commit suicide within the first 6 months of reporting it to someone. Knowing that 33% of young people have been victims of cyberbullying, this works out to roughly a 1.33% chance of suicide caused by online bullying alone.</p>
-    <div class="crisis-line">If this topic is close to home: the 988 Suicide &amp; Crisis Lifeline (call or text 988 in the US) is free and confidential, any time.</div>
-  </section>
+.title-slide{text-align:center;}
+.title-slide .eyebrow{justify-content:center;}
 
-  <section class="slide" data-slide="3">
-    <div class="eyebrow">Why Is It an Issue?</div>
-    <h2>Why Is It an Issue?</h2>
-    <p>If parents don't trust their kids with electronics, when they move on to adulthood they won't fully understand how to use the internet safely. It then creates a cycle: parents distrust → kids hide → parents distrust more.</p>
-    <p>It is a problem because it creates distrust between parents and children. Children may hide their online activity instead of asking for help, which can make them less safe online. It also causes kids to push their parents away and become distant in daily life.</p>
-  </section>
+.crisis-line{
+  margin-top:22px; padding:12px 16px; border-left:2px solid var(--clay);
+  background:rgba(201,123,90,0.08); font-family:var(--mono); font-size:12.5px; color:var(--ink-soft);
+}
 
-  <section class="slide" data-slide="4">
-    <div class="eyebrow">5 Whys</div>
-    <h2>5 Whys</h2>
-    <div class="whys-chain">
-      <div class="why-row" data-n="1">
-        <h4>Why are teens exposed to online risks?</h4>
-        <p>Teens are exposed to online risks because they often face situations online without getting guidance from a trusted person beforehand.</p>
-      </div>
-      <div class="why-row" data-n="2">
-        <h4>Why don't they ask a trusted adult for help?</h4>
-        <p>They don't ask a trusted adult for help because many worry they'll be judged, punished, or have their devices taken away.</p>
-      </div>
-      <div class="why-row" data-n="3">
-        <h4>Why do parents respond with punishment or monitoring?</h4>
-        <p>Parents respond with punishment or monitoring because they feel responsible for keeping their children safe, but don't fully understand today's online world.</p>
-      </div>
-      <div class="why-row" data-n="4">
-        <h4>Why don't parents understand today's online world?</h4>
-        <p>Parents don't understand today's online world because technology and online culture have evolved faster than they've been able to learn and adapt.</p>
-      </div>
-      <div class="why-row" data-n="5">
-        <h4>Why has this created a long-lasting issue?</h4>
-        <p>This has created a long-lasting issue because parents and teens have developed different levels of digital understanding, which creates a gap in communication and trust. This gap leads parents to rely on surveillance instead of teaching digital skills, while teens become less likely to seek support when they need it the most.</p>
-      </div>
-    </div>
-  </section>
+/* 5 Whys */
+.whys-chain{border-left:2px solid var(--beacon); margin-left:12px;}
+.why-row{position:relative; padding:0 0 28px 30px;}
+.why-row:last-child{padding-bottom:0;}
+.why-row::before{
+  content:attr(data-n); position:absolute; left:-15px; top:0; width:26px; height:26px; border-radius:50%;
+  background:var(--ink); border:2px solid var(--beacon); color:var(--beacon); font-family:var(--mono); font-size:11px;
+  display:flex; align-items:center; justify-content:center;
+}
+.why-row h4{font-size:16px; margin-bottom:5px; font-family:var(--display); font-weight:600;}
+.why-row p{font-size:14.5px; margin-bottom:0;}
 
-  <section class="slide" data-slide="5">
-    <div class="eyebrow">Current Solutions</div>
-    <h2>Current Solutions</h2>
-    <div class="compare-cols">
-      <div class="compare-col tries">
-        <h3>What parents rely on</h3>
-        <ul>
-          <li>Screen time limits</li>
-          <li>Monitoring apps</li>
-          <li>Taking devices away</li>
-          <li>Blocking websites</li>
-          <li>Location tracking</li>
-          <li>Age restrictions</li>
-          <li>Passwords / 2FA</li>
-          <li>Content filters</li>
-        </ul>
-      </div>
-      <div class="compare-col results">
-        <h3>The results</h3>
-        <ul>
-          <li>Less trust</li>
-          <li>Secret accounts, secret devices, etc.</li>
-          <li>Kids learn to hide things</li>
-          <li>Issues aren't discussed until it's too late</li>
-          <li>Low engagement</li>
-          <li>Negative feelings due to restrictions</li>
-        </ul>
-      </div>
-    </div>
-    <div class="compare-conclusion">Current solutions focus on controlling teens instead of helping families build trust and digital skills.</div>
-  </section>
+/* Current solutions */
+.compare-cols{display:grid; grid-template-columns:1fr 1fr; gap:0; border:1px solid rgba(36,31,22,0.14); margin-top:8px;}
+.compare-col{padding:22px 24px;}
+.compare-col.tries{border-right:1px solid rgba(36,31,22,0.14);}
+.compare-col h3{font-size:13px; font-family:var(--mono); text-transform:uppercase; letter-spacing:.08em; margin-bottom:14px; color:var(--clay);}
+.compare-col ul{list-style:none; display:flex; flex-direction:column; gap:8px;}
+.compare-col li{font-size:14.5px; padding-left:16px; position:relative; color:var(--ink-soft);}
+.compare-col li::before{content:'•'; position:absolute; left:0; color:var(--beacon);}
+.compare-conclusion{margin-top:20px; padding:14px 18px; background:var(--dusk); border-radius:6px; font-size:15px;}
+@media(max-width:600px){ .compare-cols{grid-template-columns:1fr;} .compare-col.tries{border-right:none; border-bottom:1px solid rgba(36,31,22,0.14);} }
 
-  <section class="slide" data-slide="6">
-    <div class="eyebrow">Solution Principles</div>
-    <h2>Solution Principles</h2>
-    <p>We want a way for parents to trust their kids and allow them to make independent choices and decisions while still understanding the risks and dangers of the internet; this includes knowing when to talk to a parent or a guardian when you don't feel safe or properly secure online, and knowing how to steer clear from cyberbullies, and much more.</p>
-  </section>
+/* Financial / investors */
+.chip-row{display:flex; gap:12px; flex-wrap:wrap; margin-top:8px;}
+.chip{font-family:var(--mono); font-size:13px; color:var(--ink-soft); border:1px dashed rgba(36,31,22,0.25); padding:8px 16px; border-radius:20px;}
 
-  <section class="slide" data-slide="7">
-    <div class="eyebrow">An Overview of What We Want Our Solution to Achieve</div>
-    <h2>An Overview of What We Want Our Solution to Achieve</h2>
-    <p>For our solution, as a team we decided on creating a toolkit: teens will show adults what they know about online safety, like how to use social media responsibly and how to play games and use social media while being responsible and safe.</p>
-    <p>In exchange, adults can help them stay safe online by showing them what they know: not to talk to people you don't know, not to share personal info, etc. There will be some parent guides and tips where there will be a 1-on-1 explaining the dangers of the internet and how to avoid them. They could have a progress system to see if teens are acting correctly and showing more signs of responsibility and safety.</p>
-  </section>
+/* Team */
+.team-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-top:8px;}
+.team-card{text-align:center; padding:18px 10px;}
+.team-avatar{
+  width:56px; height:56px; border-radius:50%; margin:0 auto 10px; background:var(--beacon);
+  display:flex; align-items:center; justify-content:center; font-family:var(--display); font-weight:700; color:var(--cream); font-size:18px;
+}
+.team-card h4{font-size:14.5px;}
+.team-card p{font-size:11.5px; color:var(--ink-faint); font-family:var(--mono); text-transform:uppercase; letter-spacing:.05em; margin-bottom:0;}
+@media(max-width:600px){ .team-grid{grid-template-columns:1fr 1fr;} }
 
-  <section class="slide" data-slide="8">
-    <div class="eyebrow">Focus Group</div>
-    <h2>Focus Group</h2>
-    <p>A focus group is a discussion with a group of people led by a moderator. For this, parents could meet together to talk about their teenagers' online safety, discuss challenges they have faced, share what has improved, and suggest ways to help teens stay safe online. This allows researchers to collect detailed feedback and different perspectives.</p>
+/* Lorem placeholder blocks */
+.lorem-block{background:var(--dusk); border-radius:6px; padding:18px 20px; margin-bottom:12px; font-size:14.5px; color:var(--ink-soft);}
+.lorem-block:last-child{margin-bottom:0;}
 
-    <div class="w5h">
-      <div class="w5h-row"><span class="w5h-label">Who</span><p>Parents of teenagers, teenagers, and a moderator.</p></div>
-      <div class="w5h-row"><span class="w5h-label">What</span><p>A group discussion where parents share their experiences and opinions about their teenagers' social media usage and online safety.</p></div>
-      <div class="w5h-row"><span class="w5h-label">When</span><p>At different stages of the program, such as after workshops or 1-on-1 sessions, to review progress and gather feedback on the solution.</p></div>
-      <div class="w5h-row"><span class="w5h-label">Where</span><p>At a school, meeting room, or online on a video call.</p></div>
-      <div class="w5h-row"><span class="w5h-label">Why</span><p>To collect feedback, understand parents' and teens' experiences, identify problems, and find ways to improve online safety for teenagers.</p></div>
-    </div>
+/* Focus Group */
+.focus-group{margin-top:30px; padding-top:26px; border-top:1px solid rgba(36,31,22,0.12);}
+.focus-group h3{font-size:19px; margin-bottom:12px; font-family:var(--display); font-weight:600;}
+.w5h{margin:18px 0; display:flex; flex-direction:column; gap:14px;}
+.w5h-row{display:flex; gap:16px; align-items:baseline;}
+.w5h-label{
+  font-family:var(--mono); font-size:11px; text-transform:uppercase; letter-spacing:.08em; color:var(--beacon);
+  flex-shrink:0; width:56px;
+}
+.w5h-row p{margin-bottom:0; font-size:15px;}
+.focus-group p strong{color:var(--paper); font-family:var(--display); font-weight:600;}
 
-    <p><strong>Answer:</strong> Yes, our solution encourages teenagers and parents to work together when making decisions about online safety instead of relying only on rules or supervision. The focus groups give both parties the opportunity to share their experiences, learn from each other, and provide feedback that improves the toolkit. This aligns with the deliverable by ensuring that young people have a voice in decision making, leading to more effective and meaningful solutions for digital life.</p>
-  </section>
+/* Toolkit steps */
+.step-row{display:flex; gap:16px; margin-bottom:22px; align-items:flex-start;}
+.step-num{
+  width:30px; height:30px; border-radius:50%; background:var(--beacon); color:var(--cream);
+  font-family:var(--mono); font-size:13px; display:flex; align-items:center; justify-content:center; flex-shrink:0;
+}
+.step-row p{margin-bottom:6px;}
+.toolkit-questions{list-style:none; margin-top:8px; display:flex; flex-direction:column; gap:8px;}
+.toolkit-questions li{
+  font-size:14.5px; color:var(--ink-soft); padding-left:18px; position:relative; line-height:1.5;
+}
+.toolkit-questions li::before{content:'"'; position:absolute; left:0; color:var(--beacon); font-family:var(--display); font-weight:700;}
 
-  <section class="slide" data-slide="9">
-    <div class="eyebrow">The Toolkit</div>
-    <h2>The Toolkit</h2>
+/* Progress tracker */
+.tracker{margin-top:32px; padding-top:24px; border-top:1px solid rgba(36,31,22,0.12);}
+.tracker-head{display:flex; align-items:center; justify-content:space-between; margin-bottom:20px; gap:12px;}
+.tracker-label{font-family:var(--mono); font-size:12px; text-transform:uppercase; letter-spacing:.08em; color:var(--ink-soft);}
 
-    <div class="step-row">
-      <div class="step-num">1</div>
-      <p>Meet up with the child you wish to have this session with.</p>
-    </div>
-    <div class="step-row">
-      <div class="step-num">2</div>
-      <p>Tell them that this is not a punishment and they are free to leave whenever they want.</p>
-    </div>
-    <div class="step-row">
-      <div class="step-num">3</div>
-      <div>
-        <p>Ask them questions.</p>
-        <ul class="toolkit-questions">
-          <li>Do you always feel safe when you're online?</li>
-          <li>How do you protect yourself when you're online?</li>
-          <li>Have you ever heard of someone your age getting cyberbullied?</li>
-          <li>What would you do if you got cyberbullied?</li>
-          <li>Has a stranger ever messaged you first? What did you do?</li>
-          <li>Is there anything online that's ever made you feel uncomfortable?</li>
-          <li>Do you know what to do if someone asks for personal info, like your address or school?</li>
-          <li>Who would you go to if something online ever felt wrong?</li>
-        </ul>
-      </div>
-    </div>
-    <div class="step-row">
-      <div class="step-num">4</div>
-      <p>Track their progress with the tracker on the next page.</p>
-    </div>
-    <div class="step-row">
-      <div class="step-num">5</div>
-      <p>Do this twice a week and come back in 7 days and see if they have made more progress.</p>
-    </div>
-  </section>
+.tracker-panel{
+  background:var(--cream); border:1px solid rgba(36,31,22,0.1); border-radius:12px; padding:34px;
+  display:grid; grid-template-columns:auto 1fr; gap:36px; align-items:center;
+}
+.ring-wrap{position:relative; width:150px; height:150px; flex-shrink:0;}
+.ring-wrap svg{transform:rotate(-90deg);}
+.ring-bg{fill:none; stroke:rgba(36,31,22,0.12); stroke-width:10;}
+.ring-fg{fill:none; stroke:var(--beacon); stroke-width:10; stroke-linecap:round; transition:stroke-dashoffset .4s ease;}
+.ring-num{
+  position:absolute; inset:0; display:flex; align-items:center; justify-content:center;
+  flex-direction:column; font-family:var(--mono);
+}
+.ring-num .n{font-size:32px; color:var(--paper); font-weight:500;}
+.ring-num .l{font-size:11px; color:var(--ink-faint); text-transform:uppercase; letter-spacing:.08em; margin-top:2px;}
 
-  <section class="slide" data-slide="10">
-    <div class="eyebrow">The Toolkit</div>
-    <h2>Progress Tracker</h2>
-    <div class="tracker">
-      <div class="tracker-head">
-        <span class="tracker-label">Progress Tracker</span>
-        <button class="pager-btn" id="trackerReset">Reset Tracker</button>
-      </div>
-      <div class="tracker-panel">
-        <div class="ring-wrap">
-          <svg width="150" height="150" viewBox="0 0 150 150">
-            <circle class="ring-bg" cx="75" cy="75" r="62"></circle>
-            <circle id="ringFg" class="ring-fg" cx="75" cy="75" r="62" stroke-dasharray="389.6" stroke-dashoffset="389.6"></circle>
-          </svg>
-          <div class="ring-num"><span class="n" id="ringPct">0%</span><span class="l">this week</span></div>
-        </div>
-        <div class="tracker-list" id="trackerList"></div>
-      </div>
-    </div>
-  </section>
+.tracker-list{display:flex; flex-direction:column; gap:20px;}
+.check-item{display:flex; align-items:flex-start; gap:14px; cursor:pointer; user-select:none;}
+.check-box{
+  width:24px; height:24px; border-radius:6px; border:1.5px solid rgba(36,31,22,0.35); flex-shrink:0;
+  display:flex; align-items:center; justify-content:center; font-size:13px; color:var(--cream);
+  transition:all .15s; margin-top:1px;
+}
+.check-item.checked .check-box{background:var(--beacon); border-color:var(--beacon);}
+.check-item span.txt{font-size:16px; color:var(--ink-soft); line-height:1.4;}
+.check-item.checked span.txt{color:var(--paper);}
 
-  <section class="slide" data-slide="11">
-    <div class="title-slide" style="margin-bottom:44px;">
-      <div class="eyebrow">Thank You</div>
-      <h1>Thank You</h1>
-      <p class="credit">Hackathon, Term 3 — Virat, Roman, Aden, Nicolas, Sisu &amp; Savannah</p>
-    </div>
+@media(max-width:640px){
+  .tracker-panel{grid-template-columns:1fr; justify-items:center; text-align:center; padding:26px;}
+  .check-item{text-align:left;}
+}
 
-    <div class="eyebrow">Meet Our Team</div>
-    <h2>Meet Our Team</h2>
-    <div class="team-grid">
-      <div class="team-card"><div class="team-avatar">V</div><h4>Virat</h4><p>Project Leader</p></div>
-      <div class="team-card"><div class="team-avatar">A</div><h4>Aden</h4><p>Website Designer &amp; Researcher</p></div>
-      <div class="team-card"><div class="team-avatar">N</div><h4>Nicolas</h4><p>Researcher</p></div>
-      <div class="team-card"><div class="team-avatar">R</div><h4>Roman</h4><p>Co-Researcher</p></div>
-      <div class="team-card"><div class="team-avatar">S</div><h4>Savannah</h4><p>Slideshow Designer</p></div>
-      <div class="team-card"><div class="team-avatar">S</div><h4>Sisu</h4><p>Focus Group Researcher</p></div>
-    </div>
+/* ---------- BOTTOM PAGINATION ---------- */
+footer.pager{
+  border-top:1px solid rgba(36,31,22,0.1); padding:18px 32px; display:flex; align-items:center;
+  justify-content:space-between; gap:16px; flex-wrap:wrap; background:var(--cream);
+}
+.pager-btn{
+  font-family:var(--mono); font-size:13px; padding:10px 20px; border-radius:4px; border:1px solid rgba(36,31,22,0.2);
+  background:none; color:var(--paper); cursor:pointer; transition:all .15s;
+}
+.pager-btn:hover:not(:disabled){border-color:var(--beacon); color:var(--beacon);}
+.pager-btn:disabled{opacity:.3; cursor:not-allowed;}
+.pager-btn.primary{background:var(--beacon); border-color:var(--beacon); color:var(--cream);}
+.pager-btn.primary:hover{opacity:.9;}
 
-    <div class="thank-you-list">
-      <p>Thank you Aden for designing the website.</p>
-      <p>Thank you Virat for being our leader.</p>
-      <p>Thank you Nicolas for being our Researcher.</p>
-      <p>Thank you Roman for helping to research.</p>
-      <p>Thank you Savannah for being our designer.</p>
-      <p> And Thank you Sisu.</p>
-    </div>
-  </section>
-</main>
+.pager-jump{display:flex; gap:6px; flex-wrap:wrap; justify-content:center;}
+.jump-dot{
+  width:30px; height:30px; border-radius:50%; border:1px solid rgba(36,31,22,0.2); background:none;
+  font-family:var(--mono); font-size:11px; color:var(--ink-soft); cursor:pointer; transition:all .15s;
+}
+.jump-dot:hover{border-color:var(--beacon);}
+.jump-dot.active{background:var(--beacon); border-color:var(--beacon); color:var(--cream);}
 
-<footer class="pager">
-  <button class="pager-btn" id="prevBtn">← Back</button>
-  <div class="pager-jump" id="pagerJump"></div>
-  <button class="pager-btn primary" id="nextBtn">Next →</button>
-</footer>
-
-<script src="script.js"></script>
-</body>
-</html>
+@media(max-width:700px){
+  header.top{padding:16px 20px;}
+  .top-right{gap:10px;}
+  .skip-btn{font-size:11px; padding:7px 12px;}
+  .page-count{font-size:11px;}
+  main{padding:34px 20px;}
+  footer.pager{padding:16px 20px; flex-direction:row; flex-wrap:wrap;}
+  .pager-jump{order:1; width:100%; justify-content:center;}
+  .pager-btn{order:2; flex:1;}
+}
