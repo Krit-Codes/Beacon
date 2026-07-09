@@ -107,6 +107,18 @@ main{flex:1; display:flex; align-items:center; justify-content:center; padding:5
 .lorem-block{background:var(--dusk); border-radius:6px; padding:18px 20px; margin-bottom:12px; font-size:14.5px; color:var(--ink-soft);}
 .lorem-block:last-child{margin-bottom:0;}
 
+/* Focus Group */
+.focus-group{margin-top:30px; padding-top:26px; border-top:1px solid rgba(36,31,22,0.12);}
+.focus-group h3{font-size:19px; margin-bottom:12px; font-family:var(--display); font-weight:600;}
+.w5h{margin:18px 0; display:flex; flex-direction:column; gap:14px;}
+.w5h-row{display:flex; gap:16px; align-items:baseline;}
+.w5h-label{
+  font-family:var(--mono); font-size:11px; text-transform:uppercase; letter-spacing:.08em; color:var(--beacon);
+  flex-shrink:0; width:56px;
+}
+.w5h-row p{margin-bottom:0; font-size:15px;}
+.focus-group p strong{color:var(--paper); font-family:var(--display); font-weight:600;}
+
 /* Toolkit steps */
 .step-row{display:flex; gap:16px; margin-bottom:22px; align-items:flex-start;}
 .step-num{
