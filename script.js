@@ -45,3 +45,55 @@ document.addEventListener('keydown', (e) => {
 });
 
 render();
+
+/* ---------- PROGRESS TRACKER ---------- */
+const trackerList = document.getElementById('trackerList');
+const trackerReset = document.getElementById('trackerReset');
+const ringFg = document.getElementById('ringFg');
+const ringPct = document.getElementById('ringPct');
+const RING_CIRC = 389.6;
+
+const HABITS = [
+  'Reviewed privacy settings together',
+  'Talked through a red flag scenario',
+  'Reported or blocked something unsafe',
+  'Told a trusted adult about something odd',
+  'Kept a location or personal detail private',
+  'Practiced spotting a fake or bot account',
+  'Talked about what to do if a stranger messages first',
+  'Checked in about how they\u2019re feeling online',
+  'Reviewed who they\u2019ve added or accepted recently',
+  'Agreed on a signal word for feeling unsafe'
+];
+
+function updateRing() {
+  const boxes = document.querySelectorAll('.check-item');
+  const checked = document.querySelectorAll('.check-item.checked').length;
+  const pct = boxes.length ? Math.round((checked / boxes.length) * 100) : 0;
+  ringFg.style.strokeDashoffset = RING_CIRC - (RING_CIRC * pct / 100);
+  ringPct.textContent = pct + '%';
+}
+
+if (trackerList) {
+  HABITS.forEach(label => {
+    const item = document.createElement('div');
+    item.className = 'check-item';
+    item.innerHTML = '<span class="check-box"></span><span class="txt">' + label + '</span>';
+    item.addEventListener('click', () => {
+      const on = item.classList.toggle('checked');
+      item.querySelector('.check-box').textContent = on ? '✓' : '';
+      updateRing();
+    });
+    trackerList.appendChild(item);
+  });
+}
+
+if (trackerReset) {
+  trackerReset.addEventListener('click', () => {
+    document.querySelectorAll('.check-item').forEach(item => {
+      item.classList.remove('checked');
+      item.querySelector('.check-box').textContent = '';
+    });
+    updateRing();
+  });
+}
